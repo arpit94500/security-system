@@ -1,0 +1,269 @@
+<!--
+=========================================================
+* Material Dashboard 2 - v3.0.2
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/material-dashboard
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://www.creative-tim.com/license)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<style>
+      .rect{
+  margin:0 0 20px;
+  padding: 20px;
+  border:2px solid #333;
+  width 80%;
+  text-align:center;
+}
+.header{
+   margin:0 auto;
+   padding: 5px 10px;
+   width:90%;
+   border:2px solid #333;
+}
+.box{
+  margin: 5px 0;
+  border:2px solid #333;
+}
+.title {
+  background-color: orange;
+  font-Cal: Poppins;
+  color: white;
+  border: 2px solid black;
+  margin:0 0 20px;
+  padding: 20px;
+}
+.my-custom-scrollbar {
+position: relative;
+height: 200px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+button.btn {
+  margin-top: auto;
+}
+
+table.table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+#btnSearch,
+#btn{
+    display: inline-block;
+    vertical-align: top;
+}
+
+classesnav ul li {
+    padding:10px 3px 10px 3px;
+    background-color:#FEC7FD;
+    display:inline:block;
+    border-radius:10px;
+    margin-bottom: 20px;
+}
+
+.btn {
+  padding:10px 3px 10px 3px;
+  text-decoration: none;
+  border: 1px solid rgb(146, 148, 248);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:hover {
+  box-shadow: 1px 1px 25px 10px rgba(146, 148, 248, 0.4);
+}
+
+.btn:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(146, 148, 248, 0.4),
+    transparent
+  );
+  transition: all 650ms;
+}
+
+.btn:hover:before {
+  left: 100%;
+}
+
+  </style>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../static/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../static/img/favicon.png">
+  <title>
+    INS Valsura
+  </title>
+
+
+  <div class="card">
+  <div class="card-header pb-0">
+    <center><h1> <img src="../static/img/INS.png" widht="70" height="90"  alt="main_logo"> Integrated Security Monitoring System</h1></center>
+    </div>
+</div>
+
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <!-- Nucleo Icons -->
+  <link href="../static/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../static/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <!-- CSS Files -->
+  <link id="pagestyle" href="../static/css/material-dashboard.css?v=3.0.2" rel="stylesheet" />
+
+<!--  <p align="right">Welcome {{username}}, <a align="right" href="/logout" class="link">Log Out</a></p>-->
+
+</head>
+
+
+<body class="g-sidenav-show  bg-gray-200">
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <div class="container-fluid py-4">
+      <div class="row mb-4">
+
+        <div class="col-lg-4 col-md-4 mb-md-0 mb-4">
+          <div class="card">
+            <div class="card-header pb-0">
+              <center>
+                <h3>Live Feed</h3>
+                <img src="{% url 'video_feed1' %}">
+              </center>
+            </div>
+
+            <div class="card-footer p-2">
+              <p class="mb-0"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8 col-md-8 mb-md-0 mb-4">
+          <div class="card">
+            <div class="card-header pb-0">
+              <div class="container">
+                <center>
+                  <button id="view" data-section="1" href="view/" class="btn btnview active">View Details</button>
+                  <button id="add" data-section="2" href="add/" class="btn">Add Personnel</button>
+                  <button id="checklog" data-section="3" href="checklog/" class="btn">Check Logs</button>
+                  <button id="cat" data-section="4" href="cat/" class="btn">Update Category</button>
+
+                  <div id="content">
+
+                  </div>
+
+                </center>
+              </div>
+            </div>
+
+            <div class="card-footer p-2">
+              <p class="mb-0"></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+<script>
+
+            //  This function communicates with django (backend)
+
+            function showSection(section) {
+                fetch(`/sections/${section}`)
+                .then(response => response.text())
+                .then(text => {
+                    console.log(text);
+                    document.querySelector('#content').innerHTML = text;
+                });
+
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+                document.querySelectorAll('button').forEach(button => {
+                    button.onclick = function() {
+                        showSection(this.dataset.section)
+                    }
+                })
+            });
+
+        </script>
+
+<script>
+$(document).ready(function(){
+
+  $(".scan").click(function(){
+  var postData = { csrfmiddlewaretoken: '{{ csrf_token }}'}
+  $.ajax({
+  url: "{% url 'video_feed1' %}",
+  data: {
+      }
+    });
+  });
+
+  $('.btnview').on('click',function(){
+    setTimeout(function(){
+      var url = "#!";
+      $.ajax({
+        url:url,
+        success:function(data){
+
+
+        }
+      });
+     },4000);
+  });
+
+  });
+
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+{{Name}}
+{{Rank}}
+{{gender}}
+{{Number}}
+{{Adhar}}
+{{snumber}}
+{{timein}}
+{{timeout}}
+{{B}}
+{{img_name}}
+
+
+            elif 'OUT' in request.method == 'POST':
+                a = Save.objects.filter(name=Name).last()
+                a.timeout = datetime.datetime.now().time()
+                a.dateout = datetime.datetime.now().date()
+                timein = a.timein
+                timeout = a.timeout
+                a.save()
+                return HttpResponseRedirect('/')
+
+        <button type="submit" class="btn btn-info btn-lg col-xs-2 margin-left" name="In">In</button>
+        <button type="submit" class="btn btn-info btn-lg col-xs-2 margin-left" name="Out">Out</button>
+
